@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "budo . --t sheetify/transform",
-    "build": "browserify index.js -g unassertify -g uglifyify",
-    "disc": "browserify index.js -g unassertify -g uglifyify --full-paths | discify --open"
+    "start": "NODE_ENV=development budo . --t sheetify/transform",
+    "build": "NODE_ENV=production browserify index.js -g unassertify -g uglifyify",
+    "disc": "NODE_ENV=production browserify index.js -g unassertify -g uglifyify --full-paths | discify --open",
+    "size": "npm run build | gzip-size | pretty-bytes"
   },
   "author": "Yoshua Wuyts <i@yoshuawuyts.com>",
   "license": "ISC",
@@ -20,5 +21,9 @@
     "virtual-app": "^2.0.0",
     "virtual-dom": "^2.1.1",
     "xtend": "^4.0.1"
+  },
+  "devDependencies": {
+    "gzip-size-cli": "^1.0.0",
+    "pretty-bytes-cli": "^1.0.0"
   }
 }

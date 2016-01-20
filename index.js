@@ -2,6 +2,9 @@ const createApp = require('virtual-app')
 const vdom = require('virtual-dom')
 const hyperx = require('hyperx')
 const xtend = require('xtend')
+const sheetRouter = require('sheet-router')
+
+const component = function () {}
 
 const hx = hyperx(vdom.h)
 
@@ -15,7 +18,7 @@ function modifier (action, state) {
 
 // render loop
 render(function render (state) {
-  return hx`<h1>${state.title}</h1>`
+  component(hx, state)
 })
 
 // states

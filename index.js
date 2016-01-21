@@ -13,8 +13,12 @@ const app = createApp(document.body, vdom)
 const initialState = { count: 0, mod: 1, location: document.location.href }
 const render = app.start(modifyState, initialState)
 const router = createRouter()
-history((href) => app.store({ type: 'location', location: href }))
-bridge(render, (state) => router(state.location, app.h))
+history(function (href) {
+  app.store({ type: 'location', location: href })
+})
+bridge(render, function (state) {
+  router(state.location, app.h)
+})
 
 // routing
 function createRouter () {

@@ -20,9 +20,9 @@ bridge(render, (state) => router(state.location, app.h))
 function createRouter () {
   return sheetRouter('/404', function (r, t) {
     return [
-      t('/', template(singleHead)),
-      t('/double', template(multiHead)),
-      t('/404', template(errorHead))
+      t('/', template(singleHead, okMain)),
+      t('/double', template(multiHead, okMain)),
+      t('/404', template(errorHead, errMain))
     ]
   })
 }
@@ -45,24 +45,41 @@ function modifyState (action, state) {
 }
 
 // render views
-function template (head) {
+function template (head, main) {
   return function template (params, h, state) {
     return hx`
-      <main>
-        <a href="/">single</a>
-        <a href="/double?foo=bar">double</a>
+      <section>
+        <nav>
+          <a href="/">single</a>
+          <a href="/double?foo=bar">double</a>
+          <a href="/noooope">clickme</a>
+        </nav>
         ${head(params, h, state)}
-        <p>modifier is ${state.mod}</p>
-        <div>count: ${state.count}</div>
-        <button onclick=${app.send({ type: 'decrement' })}>
-          -${state.mod}
-        </button>
-        <button onclick=${app.send({ type: 'increment' })}>
-          +${state.mod}
-        </button>
-      </main>
+        ${main(params, h, state)}
+      </section>
     `
   }
+}
+
+// main body if all is good
+function okMain (params, h, state) {
+  return hx`
+    <section>
+      <p>modifier is ${state.mod}</p>
+      <div>count: ${state.count}</div>
+      <button onclick=${app.send({ type: 'decrement' })}>
+        -${state.mod}
+      </button>
+      <button onclick=${app.send({ type: 'increment' })}>
+        +${state.mod}
+      </button>
+    </main>
+  `
+}
+
+// main body if all is bad
+function errMain (params, h, state) {
+  return hx`<section>NOPE YOU BROKE IT</section>`
 }
 
 // head component

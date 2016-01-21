@@ -1,35 +1,56 @@
+const history = require('sheet-router/history')
+const sheetRouter = require('sheet-router')
 const createApp = require('virtual-app')
 const vdom = require('virtual-dom')
 const hyperx = require('hyperx')
 const xtend = require('xtend')
-const sheetRouter = require('sheet-router')
-
-const component = function () {}
 
 const hx = hyperx(vdom.h)
 
-// attach
+// routing
+const router = sheetRouter('/404', function (r) {
+  return [
+    r('/', function (params, h, state) {
+      console.log('/')
+      return template(h, state)
+    }),
+    r('/double', function (params, h, state) {
+      console.log('/double')
+      console.log(state)
+      return template(h, state)
+    }),
+    r('/404', function (params, h, state) {
+      console.log('/404')
+      return template(h, state)
+    })
+  ]
+})
+history(router)
+
+// initialize and attach
 const app = createApp(document.body, vdom)
-const render = app.start(modifier, { example: false, title: '' })
-function modifier (action, state) {
-  if (action.type === 'example') return xtend(state, { example: true })
-  if (action.type === 'title') return xtend(state, { title: action.title })
+const initialState = { count: 0, location: document.location.href }
+const render = app.start(modifyState, initialState)
+render((state) => router(state.location, app.h, state))
+
+// manage state changes
+function modifyState (action, state) {
+  if (action.type === 'increment') {
+    return xtend(state, { count: state.count + 1 })
+  }
+  if (action.type === 'decrement') {
+    return xtend(state, { count: state.count - 1 })
+  }
 }
 
-// render loop
-render(function render (state) {
-  component(hx, state)
-})
-
-// states
-app.on('*', function (action, state, oldState) {
-  console.log('action happened ' + JSON.stringify(action))
-})
-
-app.on('title', function (action, state, oldState) {
-  console.log('state has new title: ' + state.title)
-})
-
-// trigger some actions
-app.store({ type: 'example' })
-app.store({ type: 'title', title: 'awesome example' })
+function template (h, state) {
+  return hx`
+    <main>
+      <a href="/">single</a>
+      <a href="/double?foo=bar">double</a>
+      <div>${state.count}</div>
+      <button onclick=${app.send({ type: 'decrement' })}>-1</button>
+      <button onclick=${app.send({ type: 'increment' })}>+1</button>
+    </main>
+  `
+}

@@ -13,12 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "babelify": "^7.2.0",
-    "hyperx": "^1.0.4",
-    "sheet-router": "^1.0.3",
+    "hyperx": "^1.0.5",
+    "sheet-router": "^1.1.0",
     "sheetify": "^3.3.3",
     "uglifyify": "^3.0.1",
     "unassertify": "^2.0.3",
-    "virtual-app": "^2.0.0",
+    "virtual-app": "^2.1.0",
     "virtual-dom": "^2.1.1",
     "xtend": "^4.0.1"
   },

@@ -30,7 +30,11 @@ function createRouter () {
 // manage state changes
 function modifyState (action, state) {
   if (action.type === 'location') {
-    return xtend(state, { location: action.location })
+    if (/double/.test(action.location)) {
+      return xtend(state, { location: action.location, mod: 2 })
+    } else {
+      return xtend(state, { location: action.location, mod: 1 })
+    }
   }
   if (action.type === 'increment') {
     return xtend(state, { count: state.count + 1 })

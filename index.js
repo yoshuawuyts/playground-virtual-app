@@ -17,7 +17,7 @@ history(function (href) {
   app.store({ type: 'location', location: href })
 })
 bridge(render, function (state) {
-  router(state.location, app.h)
+  return router(state.location, app.h)
 })
 
 // routing
@@ -41,10 +41,10 @@ function modifyState (action, state) {
     }
   }
   if (action.type === 'increment') {
-    return xtend(state, { count: state.count + 1 })
+    return xtend(state, { count: state.count + state.mod })
   }
   if (action.type === 'decrement') {
-    return xtend(state, { count: state.count - 1 })
+    return xtend(state, { count: state.count - state.mod })
   }
 }
 

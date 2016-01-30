@@ -19,13 +19,13 @@ $ git clone git@github.com:yoshuawuyts/playground-virtual-app.git
 ```txt
 Lifecycle scripts included in playground-virtual-app:
   start
-    NODE_ENV=development budo . --t sheetify/transform
+    NODE_ENV=development budo . --pushstate
 
 available via `npm run-script`:
   build
-    NODE_ENV=production browserify index.js -g unassertify -g uglifyify
+    NODE_ENV=production browserify index.js -g unassertify -g hyperxify -g uglifyify | uglifyjs
   disc
-    NODE_ENV=production browserify index.js -g unassertify -g uglifyify --full-paths | discify --open
+    NODE_ENV=production browserify index.js -g unassertify -g hyperxify -g uglifyify --full-paths | uglifyjs | discify --open
   size
     npm run build | gzip-size | pretty-bytes
 ```

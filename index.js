@@ -5,6 +5,7 @@ const createApp = require('virtual-app')
 const vdom = require('virtual-dom')
 const hyperx = require('hyperx')
 const xtend = require('xtend')
+const sf = require('sheetify')
 
 const hx = hyperx(vdom.h)
 
@@ -51,8 +52,14 @@ function modifyState (action, state) {
 // render views
 function template (head, main) {
   return function template (params, h, state) {
+    const prefix = sf`
+      nav > a {
+        font-size: 20px;
+      }
+    `
+
     return hx`
-      <section>
+      <section className=${prefix}>
         <nav>
           <a href="/">single</a>
           <a href="/double?foo=bar">double</a>
@@ -83,20 +90,34 @@ function okMain (params, h, state) {
 
 // main body if all is bad
 function errMain (params, h, state) {
-  return hx`<section>NOPE YOU BROKE IT</section>`
+  const prefix = sf`
+    span { color: red }
+  `
+
+  return hx`
+    <section className=${prefix}>
+      <span>NOPE YOU BROKE IT</span>
+    </section>
+  `
 }
 
 // head component
 function singleHead (params, h, state) {
-  return hx`<h1>super single</h1>`
+  return hx`
+    <h1>super single</h1>
+  `
 }
 
 // another head component
 function multiHead (params, h, state) {
-  return hx`<h1>double up!</h1>`
+  return hx`
+    <h1>double up!</h1>
+  `
 }
 
 // signal an error
 function errorHead (params, h, state) {
-  return hx`<h1>OH NO!</h1>`
+  return hx`
+    <h1>OH NO!</h1>
+  `
 }

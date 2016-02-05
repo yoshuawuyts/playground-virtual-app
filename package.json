@@ -5,12 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development budo . --pushstate",
-    "build": "NODE_ENV=production browserify index.js -g unassertify -g hyperxify -g uglifyify | uglifyjs",
-    "disc": "NODE_ENV=production browserify index.js -g unassertify -g hyperxify -g uglifyify --full-paths | uglifyjs | discify --open",
+    "build": "NODE_ENV=production browserify . | uglifyjs",
+    "disc": "NODE_ENV=production browserify . --full-paths | uglifyjs | discify --open",
     "size": "npm run build | gzip-size | pretty-bytes"
   },
   "author": "Yoshua Wuyts <i@yoshuawuyts.com>",
   "license": "ISC",
+  "browserify": {
+    "transform": [
+      "unassertify",
+      "sheetify/transform",
+      "hyperxify",
+      "uglifyify"
+    ]
+  },
   "dependencies": {
     "hyperx": "^1.0.5",
     "sheet-router": "^1.1.0",
@@ -27,6 +35,7 @@
     "pretty-bytes-cli": "^1.0.0",
     "uglify-js": "^2.6.1",
     "uglifyify": "^3.0.1",
-    "unassertify": "^2.0.3"
+    "unassertify": "^2.0.3",
+    "sheetify": "^4.0.0"
   }
 }

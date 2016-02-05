@@ -13,7 +13,7 @@ $ git clone git@github.com:yoshuawuyts/playground-virtual-app.git
 - [x] [immutable data structures](https://github.com/Raynos/xtend)
 - [x] [unidirectional event flow](https://github.com/sethvincent/store-emitter)
 - [x] [human readable templates](https://github.com/substack/hyperx)
-- [ ] [inline stylesheet declaration](https://github.com/sheetify/sheetify)
+- [x] [inline stylesheet declaration](https://github.com/sheetify/sheetify)
 
 ## Usage
 ```txt
@@ -23,9 +23,9 @@ Lifecycle scripts included in playground-virtual-app:
 
 available via `npm run-script`:
   build
-    NODE_ENV=production browserify index.js -g unassertify -g hyperxify -g uglifyify | uglifyjs
+    NODE_ENV=production browserify . | uglifyjs
   disc
-    NODE_ENV=production browserify index.js -g unassertify -g hyperxify -g uglifyify --full-paths | uglifyjs | discify --open
+    NODE_ENV=production browserify . --full-paths | uglifyjs | discify --open
   size
     npm run build | gzip-size | pretty-bytes
 ```
